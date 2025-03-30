@@ -1,11 +1,31 @@
+# Core dependencies
 fastapi
 uvicorn
+python-dotenv
 requests
 pydantic
-python-dotenv>=1.0.0
+
+# LangChain and LLM integrations
 langchain>=0.0.267
 langchain-openai>=0.0.2
+langchain-ollama>=0.0.1
 langchain-community>=0.0.10
-langchain-ollama
-openai>=1.0.0
-tiktoken>=0.4.0
+langchain-huggingface>=0.0.2  # Added for HuggingFaceEmbeddings
+openai>=1.2.0
+
+# Document processing
+langchain-text-splitters>=0.0.1
+unstructured>=0.10.0
+chardet>=5.2.0
+
+# Vector storage and embeddings
+chromadb>=0.4.18
+sentence-transformers>=2.2.2
+
+# Testing
+pytest
+pytest-asyncio
+
+# Debugging utilities
+rich 
+matplotlib

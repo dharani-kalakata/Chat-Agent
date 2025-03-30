@@ -37,3 +37,18 @@ ENV/
 # OS specific files
 .DS_Store
 Thumbs.db
+
+
+# Vector stores and embeddings
+chroma_db/
+*.sqlite3
+**/sentence-transformers/
+
+# Debug outputs
+debug/outputs/
+*.npy
+*.pkl
+
+# Model cache
+.cache/
+**/huggingface/

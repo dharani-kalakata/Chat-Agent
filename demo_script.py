@@ -1,4 +1,4 @@
-from send_request import send_request, get_models
+from send_request import send_request, get_models, load_codebase, ask_codebase, generate_tests
 
 def demo_streaming_response():
     print("\n--- Streaming Response (Ollama) ---")
@@ -20,6 +20,22 @@ def demo_available_models():
     get_models()
     print("\n--- End of Available Models ---")
 
+def demo_codebase_loading():
+    print("\n--- Codebase Loading ---")
+    # Load the current project's code
+    load_codebase("./")
+    print("\n--- End of Codebase Loading ---")
+
+def demo_codebase_qa():
+    print("\n--- Codebase Question Answering ---")
+    ask_codebase("What does the LangChainService class do in this codebase?", provider="ollama")
+    print("\n--- End of Codebase Question Answering ---")
+
+def demo_test_generation():
+    print("\n--- Test Generation ---")
+    generate_tests("services/langchain_service.py", provider="ollama")
+    print("\n--- End of Test Generation ---")
+
 if __name__ == "__main__":
     print("Demo Script Execution\n")
     
@@ -30,6 +46,11 @@ if __name__ == "__main__":
     print("\nOpenAI Integration Demo:")
     print("NOTE: OpenAI demos require a valid API key in config.py or .env file")
     demo_openai_response()
+    
+    print("\nCode Analysis Demos:")
+    demo_codebase_loading()
+    demo_codebase_qa()
+    demo_test_generation()
     
     print("\nModel Information:")
     demo_available_models()
