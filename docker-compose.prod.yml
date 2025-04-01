@@ -1,0 +1,49 @@
+# Production configuration using Ollama running on the host machine.
+# Ensure Ollama is installed and running on your host before deploying.
+
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      target: production
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/app/chroma_db
+    environment:
+      # For Windows/Mac - connects to host machine's Ollama
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      # For Linux - uncomment the line below and replace with your host IP
+      # - OLLAMA_BASE_URL=${HOST_OLLAMA_URL:-http://172.17.0.1:11434}
+      - OPENAI_BASE_URL=https://api.openai.com/v1
+      - DEFAULT_OLLAMA_MODEL=llama3.1
+      - DEFAULT_OPENAI_MODEL=gpt-3.5-turbo
+    env_file:
+      - .env
+    networks:
+      - llm-network
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/models"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    extra_hosts:
+      # This ensures host.docker.internal works on Linux too
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  chroma_data:
+    driver: local
+
+networks:
+  llm-network:
+    driver: bridge

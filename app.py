@@ -168,3 +168,8 @@ async def generate_tests(request: GenerateTestsRequest):
             return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/healthcheck", status_code=200)
+async def healthcheck():
+    """Health check endpoint for container orchestration"""
+    return {"status": "healthy", "api_version": "1.0.0"}
